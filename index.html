@@ -177,51 +177,7 @@ el.getCanvas().style.cursor = '';
 	
 	
 	
-// Toggle	
-map.on('load', () => {
-// Add a GeoJSON source containing place coordinates and information.
-map.addSource('geojson', {
-'type': 'geojson',
-'data': geojson
-});	
-	
- 
-for (const feature of geojson.features) {
-const symbol = feature.properties.message;
-const layerID = el.id;
- 
-// Add a layer for this symbol type if it hasn't been added already.
-if (!map.getLayer(layerID)) {
-map.addLayer({
-'id': layerID,
-'type': 'symbol',
-'source': 'geojson',
-'filter': ['==', 'message', symbol]
-});
- 
-// Add checkbox and label elements for the layer.
-const input = document.createElement('input');
-input.type = 'checkbox';
-input.id = layerID;
-input.checked = true;
-filterGroup.appendChild(input);
- 
-const label = document.createElement('label');
-label.setAttribute('for', layerID);
-label.textContent = symbol;
-filterGroup.appendChild(label);
- 
-// When the checkbox changes, update the visibility of the layer.
-input.addEventListener('change', (e) => {
-map.setLayoutProperty(
-layerID,
-'visibility',
-e.target.checked ? 'visible' : 'none'
-);
-});
-}
-}
-});	
+
 	
 
 </script>
