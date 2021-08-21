@@ -85,6 +85,7 @@ margin-right: 5px;
 </style>
 
 <div id="map"></div>
+<nav id="filter-group" class="filter-group"></nav>	
 
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoibHVpZmxycyIsImEiOiJja3NseHJwc2wzMW5rMndvYXJ3bzJicmFpIn0.b0vypex_2i3b4J1n7HdAuA';
@@ -94,7 +95,7 @@ margin-right: 5px;
 					 [8.585184, 49.121419]// Northeast coordinates
 					];
 
-
+const filterGroup = document.getElementById('filter-group');
 var map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/luiflrs/ckslxl5cd28ho17pjnj5o1cm4',
@@ -181,6 +182,14 @@ el.getCanvas().style.cursor = 'pointer';
 el.addEventListener('mouseleave', function () {
 el.getCanvas().style.cursor = '';
 });
+	
+	
+	
+// Toggle	
+	
+	
+	
+	
 
 </script>
 
