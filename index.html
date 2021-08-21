@@ -112,7 +112,7 @@ var geojson = {
 {
 'type': 'Feature',
 'properties': {
-'message': 'Bar',
+'message': 'Pass to right',
 'description':
 '<strong>Pass to right</strong><p><a href="https://github.com/lUiflrsRdz/Road_signs/tree/main/Pass%20to%20the%20right/8.448679%2C%2049.025813" target="_blank">Features</a> Position: 8.448679, 49.025813, Date: 2011-09-26, Qualitatives: color and shape 80%, Quantitatives: # 1 of 2, Sizes: D 420 </p>',
 'iconSize': [100, 100]
@@ -125,7 +125,7 @@ var geojson = {
 {
 'type': 'Feature',
 'properties': {
-'message': 'Baz',
+'message': 'Pass to right',
 'description':
 '<strong>Pass to right</strong><p><a href="https://github.com/lUiflrsRdz/Road_signs/tree/main/Pass%20to%20the%20right/8.448525,%2049.025760" target="_blank">Features</a> Position: 8.448525, 49.025760, Date: 2011-09-26, Qualitatives: color and shape 100%, Quantitatives: # 2 of 2, Sizes: D 420 </p>',
 'iconSize': [100, 100]
@@ -147,19 +147,15 @@ el.id = 'Pass_to_right';
 // create the popup
 var popup = new mapboxgl.Popup(el).setHTML(marker.properties.description);
 
-
-
 //When a click event occurs on a feature
 //el.addEventListener('click', function () {
 //window.alert(marker.properties.message);
 //}
 
-
 //new mapboxgl.Popup(el)
 //.setLngLat(coordinates)
 //.addTo(map);
 //});
-
 
 // add marker to map
 new mapboxgl.Marker(el)
@@ -167,10 +163,6 @@ new mapboxgl.Marker(el)
 .setPopup(popup)
 .addTo(map);
 });
-
-
-
-
 
 
 // Change the cursor to a pointer when the mouse is over the road-signs layer.
@@ -186,9 +178,50 @@ el.getCanvas().style.cursor = '';
 	
 	
 // Toggle	
+map.on('load', () => {
+// Add a GeoJSON source containing place coordinates and information.
+map.addSource('geojson', {
+'type': 'geojson',
+'data': geojson
+});	
 	
-	
-	
+ 
+for (const feature of geojson.features) {
+const symbol = feature.properties.message;
+const layerID = el.id;
+ 
+// Add a layer for this symbol type if it hasn't been added already.
+if (!map.getLayer(layerID)) {
+map.addLayer({
+'id': layerID,
+'type': 'symbol',
+'source': 'geojson',
+'filter': ['==', 'message', symbol]
+});
+ 
+// Add checkbox and label elements for the layer.
+const input = document.createElement('input');
+input.type = 'checkbox';
+input.id = layerID;
+input.checked = true;
+filterGroup.appendChild(input);
+ 
+const label = document.createElement('label');
+label.setAttribute('for', layerID);
+label.textContent = symbol;
+filterGroup.appendChild(label);
+ 
+// When the checkbox changes, update the visibility of the layer.
+input.addEventListener('change', (e) => {
+map.setLayoutProperty(
+layerID,
+'visibility',
+e.target.checked ? 'visible' : 'none'
+);
+});
+}
+}
+});	
 	
 
 </script>
